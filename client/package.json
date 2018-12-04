@@ -1,0 +1,28 @@
+{
+  "name": "facility-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch --progress",
+    "build": "webpack --progress"
+  },
+  "author": "m@sato-t.net",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.3",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.27.0",
+    "webpack-cli": "^3.1.2"
+  }
+}
