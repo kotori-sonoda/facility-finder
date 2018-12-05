@@ -1,6 +1,6 @@
-const NumazuCitizenHallService = require('./NumazuCitizenHallService');
-const numazuCitizenHallService = new NumazuCitizenHallService();
+const NumazuCityService = require('./NumazuCityService');
+const numazuCityService = new NumazuCityService();
 
 (async () => {
-    numazuCitizenHallService.crawl();
+    numazuCityService.crawl();
 })();
