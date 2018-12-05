@@ -42,10 +42,52 @@ class NumazuCitizenHallService {
                     page.goto(property.url);
                     await page.waitForNavigation({waitUntil: 'domcontentloaded'});
         
-                    const cal = await page.$('body > div > form > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody');
-                    const availableDays = await cal.$$('a');
+                    let cal = await page.$('body > div > form > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody');
+                    let availableDays = await cal.$$('a');
         
-                    const urls = await utils.asyncMap(availableDays, async (v) => {
+                    let urls = await utils.asyncMap(availableDays, async (v) => {
+                        return await (await v.getProperty('href')).jsonValue();
+                    });
+        
+                    for (let url of urls) {
+                        page.goto(url);
+                        await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+        
+                        let dateParts = await page.evaluate(() => {
+                            let y = parseInt(document.querySelector('select[name="yyyy"]').value, 10);
+                            let m = parseInt(document.querySelector('select[name="mm"]').value, 10) - 1;
+                            let d = parseInt(document.querySelector('select[name="dd"]').value, 10);
+                            return Promise.resolve([y, m, d]);
+                        });
+                        let date = moment(dateParts);
+        
+                        let timeTable = await page.$('body > div > form > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2)');
+        
+                        let colors = await timeTable.$$eval('td', (e) => {
+                            return e.map((v) => {return v.getAttribute('bgcolor')});
+                        });
+        
+                        colors.forEach((v, i, a) => {
+                            if (v === AVAILABLE_COLOR) {
+                                results.push([facility.name, property.name, date.format('YYYY/MM/DD'), TIME_FRAME[i]]);
+                            }
+                        });
+        
+                        await page.waitFor(5000);
+                    }
+
+                    //----
+
+                    page.goto(property.url);
+                    await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+
+                    page.click('body > div > form > table:nth-child(4) > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(1) > td:nth-child(1) > b:nth-child(5) > a');
+                    await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+        
+                    cal = await page.$('body > div > form > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody');
+                    availableDays = await cal.$$('a');
+        
+                    urls = await utils.asyncMap(availableDays, async (v) => {
                         return await (await v.getProperty('href')).jsonValue();
                     });
         
