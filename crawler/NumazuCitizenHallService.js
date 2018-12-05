@@ -1,7 +1,9 @@
 const puppeteer = require('puppeteer');
 const moment = require('moment');
+const path = require('path');
+const dbPath = path.resolve(__dirname, '../facility.sqlite');
 const sqlite = require('sqlite3').verbose();
-const db = new sqlite.Database('../facility.sqlite');
+const db = new sqlite.Database(dbPath);
 const utils = require('./Utils')();
 
 const FACILITY_NAME = '沼津市民文化センター';
@@ -27,7 +29,7 @@ class NumazuCitizenHallService {
 
             for (let property of PROPERTIES) {
                 page.goto(property[0]);
-                await page.waitForNavigation({waitUntil: 'networkidle0'});
+                await page.waitForNavigation({waitUntil: 'domcontentloaded'});
     
                 const cal = await page.$('body > div > form > table:nth-child(4) > tbody > tr:nth-child(2) > td > table > tbody');
                 const availableDays = await cal.$$('a');

@@ -10,7 +10,7 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/api/statuses/list').then((res) => {
+        fetch('/api/statuses/list').then((res) => {
             if (res.ok) {
                 return res.json();
             } else {
