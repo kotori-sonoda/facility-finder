@@ -5,6 +5,8 @@ const dbPath = path.resolve(__dirname, '../facility.sqlite');
 
 const app = express();
 
+app.use(express.static('../client'));
+
 app.use('/api/', (() => {
     const router = express.Router();
 
@@ -25,6 +27,8 @@ app.use('/api/', (() => {
     return router;
 })());
 
-app.use(express.static('../client'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../client/index.html'));
+});
 
 app.listen(3000);
