@@ -12,8 +12,11 @@ export default class Header extends React.Component {
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <LinkContainer exact to='/'>
+                    <LinkContainer to='/list/date'>
                         <NavItem>空き状況一覧（日付別）</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to='/list/facility'>
+                        <NavItem>空き状況一覧（施設別）</NavItem>
                     </LinkContainer>
                 </Nav>
             </Navbar>

@@ -10,7 +10,7 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/api/statuses/list/date').then((res) => {
+        fetch('/api/statuses/list/facility').then((res) => {
             if (res.ok) {
                 return res.json();
             } else {
@@ -31,10 +31,10 @@ export default class List extends React.Component {
                         <Table responsive striped hover>
                             <thead>
                                 <tr>
-                                    <th>日付</th>
-                                    <th>時間帯</th>
                                     <th>施設名</th>
                                     <th>設備名</th>
+                                    <th>日付</th>
+                                    <th>時間帯</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,10 +42,10 @@ export default class List extends React.Component {
                                 this.state.statuses.map((status, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{status.date}</td>
-                                            <td>{status.frame}</td>
                                             <td>{status.name}</td>
                                             <td>{status.property}</td>
+                                            <td>{status.date}</td>
+                                            <td>{status.frame}</td>
                                         </tr>
                                     );
                                 })
